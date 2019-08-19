@@ -1,0 +1,13 @@
+{
+  "name": "dodex-mess",
+  "version": "1.0.0",
+  "description": "Front-End messaging for Dodex",
+  "main": "dist/dodex-mess.min",
+  "keywords": [
+    "rolodex",
+    "dodex"
+  ],
+  "license": "MIT",
+  "dependencies": {
+  }
+}

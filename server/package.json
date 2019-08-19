@@ -1,0 +1,36 @@
+{
+  "name": "dodex-server",
+  "version": "1.0.0",
+  "description": "Demo server for dodex messaging",
+  "scripts": {
+    "start": "node koa"
+  },
+  "keywords": [
+    "koa",
+    "websocket",
+    "dodex"
+  ],
+  "author": "daveo",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "bookshelf": "^0.15.1",
+    "dodex": "^1.2.0",
+    "dodex-input": "^1.1.0",
+    "dodex-mess": "^1.0.0",
+    "knex": "^0.19.2",
+    "koa": "^2.7.0",
+    "koa-combine-routers": "^4.0.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "pg": "^7.12.0",
+    "sqlite3": "^4.1.0",
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.10.0",
+    "ws": "^7.1.1"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}
