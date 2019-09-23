@@ -190,7 +190,7 @@ function undeliveredPrivateMessages(ws, disconnectedUsers, data) {
     .catch((err) => {
       utils.log("error", err.message, __filename);
     });
-};
+}
 /**
  * Parse and process possible command from message.
  * @clientData - message with optional embedded command

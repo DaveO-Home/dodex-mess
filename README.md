@@ -77,7 +77,7 @@ Include with dodex page.
 ```javascript
        var dodex = require("dodex").default;
        var input = require("dodex-input").default;
-       var mess = require("dodex-mess).default;
+       var mess = require("dodex-mess").default;
 ```
 
 * Changing default behavior in an application module
