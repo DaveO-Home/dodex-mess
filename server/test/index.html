@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dodex</title>
   <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel='stylesheet' href='../dist/dist/dodex.min.css'> 
+  <link rel='stylesheet' href='../../node_modules/dist/dist/dodex.min.css'> 
 </head>
 
 <body>
@@ -16,15 +16,15 @@
     <img src="../dist/dist/dodex_g.ico">
   </div>
 
-  <script src="../node_modules/dodex/dist/dodex.min.js" type="text/javascript"></script>
-  <script src="../node_modules/dodex-input/dist/dodex-input.min.js" type="text/javascript"></script>
-  <script src="../node_modules/dodex-mess/dist/dodex-mess.min.js" type="text/javascript"></script>
+  <script src="../../node_modules/dodex/dist/dodex.min.js" type="text/javascript"></script>
+  <script src="../../node_modules/dodex-input/dist/dodex-input.min.js" type="text/javascript"></script>
+  <script src="../../node_modules/dodex-mess/dist/dodex-mess.min.js" type="text/javascript"></script>
   
   <script>
     const dodex = window.doDex;
     const input = window.doDexInput;
     const mess = window.doDexMess;
-    dodex.setContentFile("../dist_mess/data/content.js");
+    dodex.setContentFile("../../node_modules/dist_mess/data/content.js");
     dodex.init({/*width:550, height:250, left: "25%", top: "150px"*/
       input: input,       // required if using frontend content load
       private: "full",    // frontend load of private content, "none", "full", "partial"(only cards 28-52) - default none
