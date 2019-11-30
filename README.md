@@ -205,6 +205,7 @@ Browser must support the "indexedDB" storage feature. To clear content from the 
    1. Copy "node_modules/dodex-mess/server" to an appropriate directory.
    1. `cd` to the directory and execute `npm install`.
    1. Execute `npm start`.
+1. In lieu of Koa you can use the Java/JavaRx asynchronous server ```dodex-vertx```.
 
 ## Deployment
 
