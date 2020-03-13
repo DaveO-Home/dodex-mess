@@ -3,7 +3,7 @@
  */
 const database = require("../db/database");
 const orm = database.orm;
-const path = require("path");
+// const path = require("path");
 const Router = require("koa-router");
 const url = require("url");
 const utils = require("../js/utils.js");
@@ -35,7 +35,7 @@ orm.createTable("Users").then(() => {
 /**
  * WebSocket url
  */
-const router = new Router({ prefix: "/dodex" }, (ctx, next) => {
+const router = new Router({ prefix: "/dodex" }, (ctx/*, next*/) => {
   utils.log("info", `Session Cookie: ${ctx.req.headers}`, __filename);
 });
 
@@ -63,7 +63,7 @@ function socketServer(server) {
     let users = null;
 
     // write to access log file
-    utils.log("info", `Socket Connection: ${handle} - ${ip}`, __filename, accessLogger);
+    utils.log("info", `Socket Connection: ${handle} - ${ip}`, __filename/*, accessLogger*/);
 
     const user = {
       name: handle,

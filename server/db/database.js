@@ -148,12 +148,14 @@ async function addUser(ws, data) {
 					utils.log("info", `Result: ${result}`, __filename);
 				})
 					.catch((err) => {
+						trans.rollback;
 						ws.send(userErrorMessage);
 						utils.log("error", err.stack, __filename);
 						return -1;
 					});
 			})
 			.catch((err) => {
+				trans.rollback;
 				ws.send(userErrorMessage);
 				utils.log("error", err.stack, __filename);
 				return -1;

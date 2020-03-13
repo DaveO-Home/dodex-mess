@@ -219,6 +219,19 @@ See getting started.
 1. To test the messaging, open up the URL in a different browser.
 1. Enter a message and click send to test.
 
+## Use same credentials across browsers and devices
+
+1. In the master browser open dodex-mess(ctrl+double-click bottom static card).
+1. Click the more button(...).
+1. Select `Grab Credentials`.
+1. Paste into a file or favorite internet application(email, text-message etc.).
+1. Open dodex-mess in another browser or a browser on other devices.
+1. Select `Change Handle`.
+1. Paste master credentials into the `Enter your chat handle` input popup.
+1. Click `Save` button.
+
+The secondary browsers will now have the same credentials as your master browser and only one `handle` will show when sending private messages.  The first browser logged into will recieve the private message.
+
 ## Built With
 
 * [SASS](https://sass-lang.com/) - css build

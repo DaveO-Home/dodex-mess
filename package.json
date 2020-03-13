@@ -1,6 +1,6 @@
 {
   "name": "dodex-mess",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Front-End messaging for Dodex",
   "main": "dist/dodex-mess.min",
   "keywords": [
