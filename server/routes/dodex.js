@@ -3,9 +3,8 @@
  */
 const database = require("../db/database");
 const orm = database.orm;
-// const path = require("path");
 const Router = require("koa-router");
-const url = require("url");
+const Url = require("url").URL;
 const utils = require("../js/utils.js");
 const WebSocket = require("ws");
 
@@ -56,10 +55,10 @@ function socketServer(server) {
    *        server defaults to localhost - server:port can be changed in the dodex config. 
    */
   wss.on("connection", async (ws, request) => {
-    const parameters = url.parse(request.url, true);
-    const handle = parameters.query.handle;
-    const id = parameters.query.id;
-    const ip = request.connection.remoteAddress;
+    const parameters = new Url(request.headers.origin + request.url).searchParams;
+    const handle = parameters.get("handle");
+    const id = parameters.get("id");
+    const ip = request.socket.remoteAddress;
     let users = null;
 
     // write to access log file
@@ -75,7 +74,7 @@ function socketServer(server) {
     ws.handle = handle;
 
     await orm.getUser(ws).then(async (record) => {
-      if (record === null) {
+      if (typeof record === "undefined" || record === null) {
         await orm.addUser(ws, user)
           .catch((err) => {
             utils.log("error", err.stack, __filename);
@@ -107,10 +106,10 @@ function socketServer(server) {
           /**
            * Resend undelivered messages.
            */
-          for (let i = 0;i < data.length;i++) {
-            const postDate = data[i]["post_date"];
+          for (let i in data) {
+            const postDate = data[i].post_date;
             const formattedDate = formatDate(new Date(postDate));
-            await ws.send(`${data[i]["from_handle"]}(posted:${formattedDate}) ${data[i].message}`);
+            await ws.send(`${data[i].from_handle}(posted:${formattedDate}) ${data[i].message}`);
           }
           // remove relationship between user and message and delete message if orphaned
           await orm.deleteUndeliveredByUser(ws)
@@ -231,8 +230,8 @@ function processCommand(command, data, ws) {
       break;
     default: break;
   }
-  const returnObject = { selectedUsers: selectedUsers, command: command };
-  return returnObject;
+
+  return { selectedUsers: selectedUsers, command: command };
 }
 
 function formatDate(date) {

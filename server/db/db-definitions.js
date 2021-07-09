@@ -16,9 +16,11 @@ const knex = require("knex")(Object.assign(
 				console.error("Sql Error: %o", message);
 			},
 			deprecate(message) {
+				// eslint-disable-next-line no-console
 				console.log("Sql Deprecate: %o", message);
 			},
 			debug(message) {
+				// eslint-disable-next-line no-console
 				console.log("Sql debug: %o", message);
 			}
 		}
@@ -41,7 +43,7 @@ const tables = {
 		return knex.schema.createTable(tableName, (table) => {
 			table.increments("id");
 			table.text("message");
-			table.string("from_handle"),
+			table.string("from_handle");
 			table.datetime("post_date");
 		});
 	},
@@ -57,18 +59,17 @@ const tables = {
 /** Bookshelf Models
  * User - stores registered users
  */
-const User = bookshelf.Model.extend({
+const User = bookshelf.model("User", {
 	defaults: { "last_login": new Date() },
 	tableName: "users",
 	messages() {
-		return this.belongsToMany(Message, "undelivered");
+		return this.belongsToMany(Message, "undelivered")
 	}
-});
+})
 /**
  * Message - stores private undelivered messages
  */
-const Message = bookshelf.Model.extend({
-	defaults: { "post_date": new Date() },
+const Message = bookshelf.model("Message", {
 	tableName: "messages",
 	users() {
 		return this.belongsToMany(User, "undelivered");
@@ -76,14 +77,14 @@ const Message = bookshelf.Model.extend({
 	undelivered() {
 		return this.hasMany(Undelivered);
 	}
-});
+})
 /**
  * Undelivered - many to many relationship between User and Message
  */
-const Undelivered = bookshelf.Model.extend({
+const Undelivered = bookshelf.model("Undelivered", {
 	tableName: "undelivered",
-	get idAttribute() { return null; }
-});
+	get idAttribute() { return "user_id"; }
+})
 
 exports.tables = tables;
 exports.User = User;

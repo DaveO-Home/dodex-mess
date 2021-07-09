@@ -1,0 +1,3 @@
+deploy
+*.sqlite3
+server/log

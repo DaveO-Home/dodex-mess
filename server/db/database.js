@@ -27,7 +27,7 @@ const orm = {
 	},
 	/**
 	 * Add new user
-	 * @ws - connecting socker
+	 * @ws - connecting socket
 	 * @data - all required data for User table.
 	 */
 	addUser(ws, data) {
@@ -66,8 +66,7 @@ const orm = {
 		return User.where({ name: ws.handle, password: ws.id })
 			.fetch({ withRelated: ["messages.users"] })
 			.then((response) => {
-				const messages = response ? response.related("messages").toJSON() : null;
-				return messages;
+				return response ? response.related("messages").toJSON() : null;
 			}).catch((err) => {
 				utils.log("error", err.stack, __filename);
 			});
@@ -89,7 +88,7 @@ const orm = {
 	 */
 	addUndelivered(ws, disconnectedUsers, messageId) {
 		const disconnectedLength = disconnectedUsers.length;
-		for (let i = 0;i < disconnectedLength;i++) {
+		for (let i = 0; i < disconnectedLength; i++) {
 			getUserByName(disconnectedUsers[i]).then((user) => {
 				addUndelivered(ws, user.get("id"), messageId);
 			});
@@ -130,32 +129,32 @@ async function addUser(ws, data) {
 	let status = 0;
 
 	await bookshelf.transaction((trans) => {
-		User.forge().save({
+		new User().save({
 			name: data.name,
 			password: data.password,
 			ip: data.ip,
 			"last_login": new Date()
 		}, {
-				transacting: trans,
-				method: "insert",
-				defaults: true,
-				patch: false,
-				require: true
-			}).then((user) => {
-				return trans.commit(user).then((data) => {
-					return Promise.resolve(`Committed - ${user.get("name")}`);
-				}).then((result) => {
-					utils.log("info", `Result: ${result}`, __filename);
-				})
-					.catch((err) => {
-						trans.rollback;
-						ws.send(userErrorMessage);
-						utils.log("error", err.stack, __filename);
-						return -1;
-					});
+			transacting: trans,
+			method: "insert",
+			defaults: true,
+			patch: false,
+			require: true
+		}).then((user) => {
+			return trans.commit(user).then((/*data*/) => {
+				return Promise.resolve(`Committed - ${user.get("name")}`);
+			}).then((result) => {
+				utils.log("info", `Result: ${result}`, __filename);
 			})
+				.catch((err) => {
+					trans.rollback();
+					ws.send(userErrorMessage);
+					utils.log("error", err.stack, __filename);
+					return -1;
+				});
+		})
 			.catch((err) => {
-				trans.rollback;
+				trans.rollback();
 				ws.send(userErrorMessage);
 				utils.log("error", err.stack, __filename);
 				return -1;
@@ -169,7 +168,7 @@ async function addUser(ws, data) {
 }
 
 function getUserByName(handle) {
-	return User.forge({ name: handle })
+	return new User({ name: handle })
 		.fetch()
 		.catch((err) => {
 			utils.log("error", err.stack, __filename);
@@ -178,18 +177,20 @@ function getUserByName(handle) {
 }
 
 function getUser(ws) {
-	return User.forge({ name: ws.handle, password: ws.id })
+	return new User({ name: ws.handle, password: ws.id })
 		.fetch()
 		.catch((err) => {
-			utils.log("error", err.stack, __filename);
-			ws.send(userErrorMessage);
+			if (err.message !== "EmptyResponse") {
+				utils.log("error", err.stack, __filename);
+				ws.send(userErrorMessage);
+			}
 		});
 }
 
 async function getUsers(ws) {
 	let response = null;
 
-	await User.forge()
+	await new User()
 		.query(function (query) {
 			query.where("password", "<>", ws.id);
 		})
@@ -209,31 +210,33 @@ async function deleteUser(ws) {
 	const user = await getUser(ws);
 
 	bookshelf.transaction((trans) => {
-		user.destroy({ transacting: trans })
-			.then(trans.commit)
-			.catch(function (err) {
-				utils.log("error", err.stack, __filename);
-				trans.rollback;
-				ws.send(userErrorMessage);
-			});
+		if (user !== null) {
+			user.destroy({ transacting: trans })
+				.then(trans.commit)
+				.catch(function (err) {
+					utils.log("error", err.stack, __filename);
+					trans.rollback();
+					ws.send(userErrorMessage);
+				});
+		}
 	});
 }
 
 function addMessage(ws, data) {
 	return bookshelf.transaction((trans) => {
-		Message.forge().save({
+		new Message().save({
 			message: data.message,
 			"from_handle": ws.handle,
 			"post_date": new Date()
 		}, {
-				transacting: trans,
-				method: "insert",
-				defaults: true,
-				patch: false,
-				require: true
-			})
+			transacting: trans,
+			method: "insert",
+			defaults: true,
+			patch: false,
+			require: true
+		})
 			.then((message) => {
-				return trans.commit(message).then((data) => {
+				return trans.commit(message).then((/*data*/) => {
 					utils.log("info", `Committed Message- ${message.get("id")}`, __filename);
 				}).catch((err) => {
 					ws.send(undeliveredError);
@@ -251,24 +254,24 @@ function addMessage(ws, data) {
 
 function addUndelivered(ws, userId, messageId) {
 	return bookshelf.transaction((trans) => {
-		Undelivered.forge().save({
+		new Undelivered().save({
 			"user_id": userId,
 			"message_id": messageId
 		}, {
-				transacting: trans,
-				method: "insert",
-				defaults: false,
-				patch: false,
-				require: true
-			}).then((undelivered) => {
-				return trans.commit(undelivered).then((data) => {
-					utils.log("info", `Committed Undelivered- ${undelivered.get("user_id")}`, __filename);
-				})
-					.catch((err) => {
-						ws.send(undeliveredError);
-						utils.log("error", err.stack, __filename);
-					});
+			transacting: trans,
+			method: "insert",
+			defaults: false,
+			patch: false,
+			require: true
+		}).then((undelivered) => {
+			return trans.commit(undelivered).then((/*data*/) => {
+				utils.log("info", `Committed Undelivered- ${undelivered.get("user_id")}`, __filename);
 			})
+				.catch((err) => {
+					ws.send(undeliveredError);
+					utils.log("error", err.stack, __filename);
+				});
+		})
 			.catch((err) => {
 				ws.send(undeliveredError);
 				utils.log("error", err.stack, __filename);
@@ -283,21 +286,19 @@ async function deleteUndeliveredByUser(ws) {
 	const user = await getUser(ws);
 	const messageIds = [];
 
-	return Undelivered.forge().where({ "user_id": user.id }).fetchAll()
+	return new Undelivered().query().where({ "user_id": user.id })
 		.then(async (undelivered) => {
 			bookshelf.transaction(async (trans) => {
-				const undeliveredArray = undelivered.toJSON();
-				const undeliveredLength = undeliveredArray.length;
-				for (let i = 0;i < undeliveredLength;i++) {
-					const deliveredObject = undelivered.at(i).toJSON();
-					const delivered = await Undelivered.forge().where(deliveredObject);
+				const undeliveredLength = undelivered.length;
+				for (let i = 0; i < undeliveredLength; i++) {
+					const deliveredObject = undelivered[i];
+					const delivered = await new Undelivered().where(deliveredObject);
 					await delivered.destroy({ transacting: trans })
 						.catch((err) => {
 							utils.log("error", err.stack, __filename);
 							throw err.message;
 						});
-
-					messageIds.push(deliveredObject["message_id"]);
+					messageIds.push(deliveredObject.message_id);
 				}
 			}).then(() => {
 				deleteMessages(messageIds);
@@ -313,8 +314,8 @@ async function deleteUndeliveredByUser(ws) {
  */
 async function deleteMessages(messageIds) {
 	const messageIdsLength = messageIds.length;
-	for (let i = 0;i < messageIdsLength;i++) {
-		await Message.forge().where({ "id": messageIds[i] })
+	for (let i = 0; i < messageIdsLength; i++) {
+		await new Message().where({ "id": messageIds[i] })
 			.fetch({ withRelated: ["undelivered"] })
 			.then(async (message) => {
 				if (message && message.related(["undelivered"]).toJSON().length === 0) {

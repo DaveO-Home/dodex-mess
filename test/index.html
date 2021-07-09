@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+  <!--
+        Change all dodex links to install location.  The default values assume you are running the
+        demo koa server located in node_modules/dodex-mess/server(npm start). Using Url...
+
+        localhost:3087/test/index.html or
+        localhost:3087/test/bootstrap.html
+  -->
 <html lang="en">
 
 <head>
@@ -6,8 +13,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="../favicon.ico">
-  <title>Dodex/DodexInput</title>
+  <link rel="icon" href="../images/favicon.ico">
+  <title>Dodex/DodexMess</title>
   
   <!--Dodex has frontend css included-->
   <link rel='stylesheet' href='../../dodex/dist/dodex.min.css'> 
@@ -35,7 +42,7 @@
       server: "localhost:3087" // configured websocket server - example in node_modules/dodex-mess, koa.js
     })
       .then(function () {
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 3; i++) {
           dodex.addCard(content);
         }
 

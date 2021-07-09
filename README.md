@@ -203,9 +203,9 @@ Browser must support the "indexedDB" storage feature. To clear content from the 
 1. Optionally copy `node_modules/dodex/`, `node_modules/dodex-input/` and `node_modules/dodex-mess/` javascript, css and images to appropriate directories; If using a bundler like browserify, you may only need to copy the content.js(or create your own) and images.
 1. The Demo Koa server.
    1. Copy "node_modules/dodex-mess/server" to an appropriate directory.
-   1. `cd` to the directory and execute `npm install`.
+   1. `cd` to the directory and execute `npm ci` || `npm install`.
    1. Execute `npm start`.
-1. In lieu of Koa you can use the Java/JavaRx asynchronous server ```dodex-vertx```.
+1. In lieu of Koa you can use the Java/rxJava asynchronous server ```dodex-vertx```.
 
 ## Deployment
 
@@ -236,7 +236,7 @@ The secondary browsers will now have the same credentials as your master browser
 
 * [SASS](https://sass-lang.com/) - css build
 * [Javascript](https://www.javascript.com//) - language
-* [Parcel](https://parceljs.org/) - bundler
+* [Rollup](https://rollupjs.org/) - bundler
 
 ## Authors
 

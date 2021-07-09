@@ -5,10 +5,12 @@ const serve = require("koa-static");
 const path = require("path");
 const http = require("http");
 const utils = require("./utils.js");
+// const cors = require("koa-cors");
 
 const dodexRouter = routers.dodexRouter;
 const app = new Koa();
 
+// app.use(cors());
 
 app.use(routers.routers());
 
