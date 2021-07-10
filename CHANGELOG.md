@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.3.1](https://github.com/DaveO-Home/dodex-mess/tree/v1.3.1) (2021-07-10)
+
+[Full Changelog](https://github.com/DaveO-Home/dodex-mess/compare/v1.3.0...v1.3.1)
+
+* Fixed `package.json` in server for dodex depandencies
+
 ## [v1.3.0](https://github.com/DaveO-Home/dodex-mess/tree/v1.3.0) (2021-07-08)
 
 [Full Changelog](https://github.com/DaveO-Home/dodex-mess/compare/5aaf57667f62e0226c9f7984a93f8a2a3854afb0...v1.3.0)
