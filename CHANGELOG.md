@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.3.2](https://github.com/DaveO-Home/dodex/tree/v1.3.2) (2022-04-19)
+
+[Full Changelog](https://github.com/DaveO-Home/dodex/compare/v1.3.1...v1.3.2)
+
+* Removed invalid css caught by the `parcel` bundler.
+* Fixed javascript deprecations.
+* Added to emoji array.
+
 ## [v1.3.1](https://github.com/DaveO-Home/dodex-mess/tree/v1.3.1) (2021-07-10)
 
 [Full Changelog](https://github.com/DaveO-Home/dodex-mess/compare/v1.3.0...v1.3.1)
