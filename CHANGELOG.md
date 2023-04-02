@@ -1,8 +1,14 @@
 # Changelog
 
-## [v1.3.2](https://github.com/DaveO-Home/dodex/tree/v1.3.2) (2022-04-19)
+## [v1.3.3](https://github.com/DaveO-Home/dodex-mess/tree/v1.3.3) (2023-04-03)
 
-[Full Changelog](https://github.com/DaveO-Home/dodex/compare/v1.3.1...v1.3.2)
+[Full Changelog](https://github.com/DaveO-Home/dodex-mess/compare/v1.3.2...v1.3.3)
+
+* Fixed "Grab Credentials", can now use same handle across devices/browsers. 
+
+## [v1.3.2](https://github.com/DaveO-Home/dodex-mess/tree/v1.3.2) (2022-04-19)
+
+[Full Changelog](https://github.com/DaveO-Home/dodexi-mess/compare/v1.3.1...v1.3.2)
 
 * Removed invalid css caught by the `parcel` bundler.
 * Fixed javascript deprecations.
