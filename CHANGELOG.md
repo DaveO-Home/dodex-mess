@@ -1,6 +1,10 @@
 # Changelog
 
-## [v1.3.3](https://github.com/DaveO-Home/dodex-mess/tree/v1.3.3) (2023-04-03)
+## [v1.3.4](https://github.com/DaveO-Home/dodex-mess/tree/v1.3.4) (2023-05-12)
+
+[Full Changelog](https://github.com/DaveO-Home/dodex-mess/compare/v1.3.3...v1.3.4)
+
+* Really fixed "Grab Credentials", can now use same handle across devices/browsers. Was stripping last digit.
 
 [Full Changelog](https://github.com/DaveO-Home/dodex-mess/compare/v1.3.2...v1.3.3)
 
